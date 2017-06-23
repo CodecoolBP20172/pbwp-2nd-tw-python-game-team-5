@@ -1,179 +1,164 @@
 import sys
 
-# Board 1
+# 2D matrix for boards
+board_one = [[" ", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
+             ["A", "~", "~", "~", "~", "~", "~", "~", "~", "~"],
+             ["B", "~", "~", "~", "~", "~", "~", "~", "~", "~"],
+             ["C", "~", "~", "~", "~", "~", "~", "~", "~", "~"],
+             ["D", "~", "~", "~", "~", "~", "~", "~", "~", "~"],
+             ["E", "~", "~", "~", "~", "~", "~", "~", "~", "~"],
+             ["F", "~", "~", "~", "~", "~", "~", "~", "~", "~"],
+             ["G", "~", "~", "~", "~", "~", "~", "~", "~", "~"],
+             ["H", "~", "~", "~", "~", "~", "~", "~", "~", "~"],
+             ["I", "~", "~", "~", "~", "~", "~", "~", "~", "~"]]
+board_one_hidden = [[" ", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
+                    ["A", "~", "~", "~", "~", "~", "~", "~", "~", "~"],
+                    ["B", "~", "~", "~", "~", "~", "~", "~", "~", "~"],
+                    ["C", "~", "~", "~", "~", "~", "~", "~", "~", "~"],
+                    ["D", "~", "~", "~", "~", "~", "~", "~", "~", "~"],
+                    ["E", "~", "~", "~", "~", "~", "~", "~", "~", "~"],
+                    ["F", "~", "~", "~", "~", "~", "~", "~", "~", "~"],
+                    ["G", "~", "~", "~", "~", "~", "~", "~", "~", "~"],
+                    ["H", "~", "~", "~", "~", "~", "~", "~", "~", "~"],
+                    ["I", "~", "~", "~", "~", "~", "~", "~", "~", "~"]]
+board_two = [[" ", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
+             ["A", "~", "~", "~", "~", "~", "~", "~", "~", "~"],
+             ["B", "~", "~", "~", "~", "~", "~", "~", "~", "~"],
+             ["C", "~", "~", "~", "~", "~", "~", "~", "~", "~"],
+             ["D", "~", "~", "~", "~", "~", "~", "~", "~", "~"],
+             ["E", "~", "~", "~", "~", "~", "~", "~", "~", "~"],
+             ["F", "~", "~", "~", "~", "~", "~", "~", "~", "~"],
+             ["G", "~", "~", "~", "~", "~", "~", "~", "~", "~"],
+             ["H", "~", "~", "~", "~", "~", "~", "~", "~", "~"],
+             ["I", "~", "~", "~", "~", "~", "~", "~", "~", "~"]]
+board_two_hidden = [[" ", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
+                    ["A", "~", "~", "~", "~", "~", "~", "~", "~", "~"],
+                    ["B", "~", "~", "~", "~", "~", "~", "~", "~", "~"],
+                    ["C", "~", "~", "~", "~", "~", "~", "~", "~", "~"],
+                    ["D", "~", "~", "~", "~", "~", "~", "~", "~", "~"],
+                    ["E", "~", "~", "~", "~", "~", "~", "~", "~", "~"],
+                    ["F", "~", "~", "~", "~", "~", "~", "~", "~", "~"],
+                    ["G", "~", "~", "~", "~", "~", "~", "~", "~", "~"],
+                    ["H", "~", "~", "~", "~", "~", "~", "~", "~", "~"],
+                    ["I", "~", "~", "~", "~", "~", "~", "~", "~", "~"]]
+
+# list for changing alphabet to numbers
+alphabet = {"A": 1, "B": 2, "C": 3, "D": 4, "E": 5, "F": 6, "G": 7, "H": 8, "I": 9}
+
+# empty list for ships(player one)
+player_one_ships = [[], [], []]
+
+# empty list for guesses(player one)
+player_one_guesses = [[], [], []]
+
+# empty list for ships(player two)
+player_two_ships = [[], [], []]
+
+# empty list for guesses(player two)
+player_two_guesses = [[], [], []]
+
+# variable for points
+player_one = 0
+player_two = 0
+
+# variable for checking every item
+n = 0
+m = 0
 
 
-def program_end():
-    sys.exit('Exit')
-
-
-def print_board_1(board_1):
-    chars = [" ", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
-    print(" ".join(chars))
-
-    for index, row in enumerate(board_1):
-        print(str(index) + " " + " ".join(row))
-
-
-board_1 = []
-
-# Board 2
-
-
-def print_board_2(board_2):
-    chars = [" ", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
-    print(" ".join(chars))
-
-    for index, row in enumerate(board_2):
-        print(str(index) + " " + " ".join(row))
-
-
-board_2 = []
-
-# player 1 make ship
-
-
-def player_1shipmake():
-    print('Player 1 board: ', '\n')
-
+# creating a beautiful board
+def print_board(board):
+    n = 0
     for i in range(10):
-        board_1.append(["<"] * 10)
+        print(str(" ".join(board[n])))
+        n += 1
+    return(board)
 
-    print_board_1(board_1)
+
+def ship_instructions(board, ship):
     while True:
         try:
-            for turn in range(1):
-                place_row_1 = int(input("P1 choose row to make ship:"))
-                break
+            x = input("Choose row: ")
+            for key, value in alphabet.items():
+                if x == key:
+                    row = value
         except ValueError:
-            print('Number please!')
+            print('Wrong input!')
             continue
         break
 
     while True:
         try:
-            for turn in range(1):
-                place_col_1 = int(input("P1 choose col to make ship:"))
-                print('\n')
-                board_1[place_row_1][place_col_1] = ">"
-                print_board_1(board_1)
-                print('\n')
-                break
+            y = int(input("Choose col: "))
+            break
         except ValueError:
-            print('Number please!')
+            print('Wrong input!')
             continue
         break
-    return [place_row_1, place_col_1]
-
-# player 2 make ship
-
-
-def player_2shipmake():
-    print('Player 2 board: ', '\n')
-
-    for i in range(10):
-        board_2.append([">"] * 10)
-
-    print_board_2(board_2)
-    while True:
-        try:
-            for turn in range(1):
-                place_row_2 = int(input("P2Choose Row to make ship:"))
-                break
-        except ValueError:
-            print('Number please!')
-            continue
-        break
-
-    while True:
-        try:
-            for turn in range(1):
-                place_col_2 = int(input("P2Choose Col to make ship:"))
-                print('\n')
-                board_2[place_row_2][place_col_2] = "<"
-                print_board_2(board_2)
-                print('\n')
-                break
-        except ValueError:
-            print('Number please!')
-            continue
-        break
-    return [place_row_2, place_col_2]
-
-# player 1 guess
+    ship.append(row)
+    ship.append(y)
+    board[ship[0]][ship[1]] = "!"
+    return(ship)
 
 
-def player_1guess():
-    while True:
-        try:
-            for turn in range(1):
-                place_row_2 = int(input("P1 guess a Row:"))
-                break
-        except ValueError:
-            print('Number please!')
-            continue
-        break
-
-    while True:
-        try:
-            for turn in range(1):
-                place_col_2 = int(input("P1 guess a col :"))
-                print('\n')
-                board_2[place_row_2][place_col_2] = "X"
-                print_board_2(board_2)
-                print('\n')
-                break
-        except ValueError:
-            print('Number please!')
-            continue
-        break
-    return [place_row_2, place_col_2]
-
-# player 2 guess
+def compare(player, board, ship, guess):
+    if ship == guess:
+        board[ship[0]][ship[1]] = "Y"
+        player = player + 1
+    elif ship != guess:
+        board[ship[0]][ship[1]] = "N"
+    else:
+        board[ship[0]][ship[1]] = "~"
 
 
-def player_2guess():
-    while True:
-        try:
-            for turn in range(1):
-                guess_row_2 = int(input("P2 guess row to fire:"))
-                break
-        except ValueError:
-            print('Number please!')
-            continue
-        break
+def main():
+    print("Welcome to Battleship game 2.0")
+    print("player one is placing the boats")
+    print_board(board_one)
+    ship_instructions(board_one, player_one_ships[0])
+    ship_instructions(board_one, player_one_ships[1])
+    ship_instructions(board_one, player_one_ships[2])
+    print_board(board_one)
+    print("player two is placing the boats")
+    print_board(board_two)
+    ship_instructions(board_two, player_two_ships[0])
+    ship_instructions(board_two, player_two_ships[1])
+    ship_instructions(board_two, player_two_ships[2])
+    print_board(board_two)
+    print('\n')
+    print("....Guessing Time....")
+    print("Player one is guessing: ")
+    print_board(board_two_hidden)
+    ship_instructions(board_two_hidden, player_one_guesses[0])
+    ship_instructions(board_two_hidden, player_one_guesses[1])
+    ship_instructions(board_two_hidden, player_one_guesses[2])
+    compare(player_one, board_two_hidden, player_two_ships[0], player_one_guesses[0])
+    compare(player_one, board_two_hidden, player_two_ships[0], player_one_guesses[1])
+    compare(player_one, board_two_hidden, player_two_ships[0], player_one_guesses[2])
+    compare(player_one, board_two_hidden, player_two_ships[1], player_one_guesses[0])
+    compare(player_one, board_two_hidden, player_two_ships[1], player_one_guesses[1])
+    compare(player_one, board_two_hidden, player_two_ships[1], player_one_guesses[2])
+    compare(player_one, board_two_hidden, player_two_ships[2], player_one_guesses[0])
+    compare(player_one, board_two_hidden, player_two_ships[2], player_one_guesses[1])
+    compare(player_one, board_two_hidden, player_two_ships[2], player_one_guesses[2])
+    print(player_one)
+    print_board(board_two_hidden)
+    print("Player two is guessing: ")
+    print_board(board_one_hidden)
+    ship_instructions(board_one_hidden, player_two_guesses[0])
+    ship_instructions(board_one_hidden, player_two_guesses[1])
+    ship_instructions(board_one_hidden, player_two_guesses[2])
+    compare(player_two, board_one_hidden, player_one_ships[0], player_two_guesses[0])
+    compare(player_two, board_one_hidden, player_one_ships[0], player_two_guesses[1])
+    compare(player_two, board_one_hidden, player_one_ships[0], player_two_guesses[2])
+    compare(player_two, board_one_hidden, player_one_ships[1], player_two_guesses[0])
+    compare(player_two, board_one_hidden, player_one_ships[1], player_two_guesses[1])
+    compare(player_two, board_one_hidden, player_one_ships[1], player_two_guesses[2])
+    compare(player_two, board_one_hidden, player_one_ships[2], player_two_guesses[0])
+    compare(player_two, board_one_hidden, player_one_ships[2], player_two_guesses[1])
+    compare(player_two, board_one_hidden, player_one_ships[2], player_two_guesses[2])
+    print(player_two)
+    print_board(board_one_hidden)
+    
 
-    while True:
-        try:
-            for turn in range(1):
-                guess_col_2 = int(input("P1 guess col to fire:"))
-                print('\n')
-                board_1[guess_row_2][guess_col_2] = "X"
-                print_board_1(board_1)
-                print('\n')
-                break
-        except ValueError:
-            print('Number please!')
-            continue
-        break
-    return [guess_row_2, guess_col_2]
-
-# main
-
-
-shipP1 = player_1shipmake()
-shipP2 = player_2shipmake()
-guessP1 = player_1guess()
-if guessP1 == shipP2:
-    print('PLayer 1 sunk Player 2 boat')
-    program_end()
-else:
-    print("You missed it...")
-    player_1guess()
-guessP2 = player_2guess()
-if guessP2 == shipP1:
-    print('PLayer 2 sunk Player 1 boat')
-    program_end()
-else:
-    print("You missed it...")
-    player_2guess()
+main()
